@@ -1,0 +1,64 @@
+<br/>
+
+<div id="divMainContent">
+
+<div class="seating"><h1>Seating Chart</h1>
+
+<table>
+<tbody>
+<tr>
+    <th colspan="8">
+    <div class="ProfSeat">
+    <p class="SeatTakenHeading">Professor </p>
+    <a title="Seat Reserved for Professor" href="#"><p class="SeatDetail"><strong>Prof. Avery</strong> </p></a> </div>
+    </th>
+</tr>
+<tr>
+    <% @seats.each do |seat| %>
+       <% if @counter > 7  %>
+         <% @counter=0 %>
+	  </tr><tr>
+	<% end %>
+	<td>
+    <% if seat.user  %>
+      <div class="SeatTaken">
+	    	<p class="SeatTakenHeading">     
+    
+   
+
+  <%= seat.id%></p>
+	    	<a title="Seat Taken By: <%= seat.user.fname %> <%= seat.user.lname %>" href="#"><p class="SeatDetail"><strong><%= seat.user.fname %></strong> </p></a>
+	    	<a title="Chat with <%= seat.user.fname %>" target="_blank" href="/messages/private/<%=session[:user_id]%>/<%=seat.user.id%>"><p class="SeatDetail">Chat</p></a> </div>
+           <% else %>
+		<div class="SeatOpen">
+		<p class="SeatOpenHeading"><%= seat.id%></p>
+		<p class="SeatDetail"><a title="Occupy Seat:<%= seat.id%>" href="#"><%= button_to "Sit", :action => "sit", :id => seat.id %> </p></a>
+		</div>
+	    <% end %> 
+	</td>
+	<% if @counter == 3  %>
+	  <td width="25px">  </td>
+	<% end %>
+
+    <% @counter+=1 %>
+    <% end %>
+</tbody>
+</table> <br/><br/>
+</div>
+
+<div class="chat"><h1>Classroom Chat Box</h1>
+
+<%= form_tag ("/messages/create/#{session[:user_id]}") do %>
+  <%= text_area_tag(:g_message_output, @gconversation, :size=>"75x10", :readonly=>"readonly") %>
+  <br/>
+  <%= text_area_tag(:g_message, "", :size=>"75x10") %>
+  
+  <div class="actions">
+    <%= submit_tag(:Send) %>
+  </div>
+<% end %>
+
+
+</div>
+</div>
+<div style="clear:both"><br/></div>

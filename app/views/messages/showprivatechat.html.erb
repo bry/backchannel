@@ -1,0 +1,20 @@
+<div id="divMainContent">
+<br/><br/>
+<div class="privatechat"> <h1>Private Chat View</h1>
+
+      <%= form_tag ("/messages/create/#{params[:from]}/#{params[:to]}") do %>
+        <div class="chatto"> <strong>To: <%= User.find(params[:to]).fname %></strong>
+        <%= text_area_tag(:message_output, @conversation, :size=>"75x10", :readonly=>"readonly") %> </div>
+        <br/>
+        <div class="chatto"><%= text_area_tag(:message, "", :size=>"75x10") %> 
+	 <div class="actions">
+        	<%= submit_tag(:Send) %>
+	</div>
+	</div>
+   
+     
+     <% end %>
+
+</div>
+
+<div width="100%" style="text-align:center"><br/> <%= link_to 'Seating Chart', seats_path %> </div>

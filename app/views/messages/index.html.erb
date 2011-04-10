@@ -1,0 +1,24 @@
+<h1>Private Chat View</h1>
+
+<br />
+<table border=1>
+  <tr>
+    <th>Seat</th>
+  </tr>
+  <tr>
+    <td>
+      <%= form_tag ("/messages/create/#{params[:from]}/#{params[:to]}") do %>
+
+        <%= text_area_tag(:message_output, @conversation, :size=>"75x10", :readonly=>"readonly") %>
+        <br/>
+        <%= text_area_tag(:message, "", :size=>"75x10") %> 
+      
+      <div class="actions">
+        <%= submit_tag(:Send) %>
+      </div>
+     <% end %>
+    </td>
+  </tr>
+</table>
+
+<%= link_to 'Seating Chart', seats_path %>

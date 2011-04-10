@@ -1,0 +1,2 @@
+module SeatHelper
+end
