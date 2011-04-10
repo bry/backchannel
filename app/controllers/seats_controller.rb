@@ -21,8 +21,10 @@ class SeatsController < ApplicationController
     @counter = 0
     @seats = Seat.all(:order =>'id')
 
-    @messages = Message.find_all_by_user_id_to(nil)
-   
+    #@messages = Message.find_all_by_user_id_to(nil)
+    @messages = Message.where("user_id_to IS NULL AND created_at > ?", Time.now.strftime("%Y-%m-%d")) 
+
+
     @messages.each do |m|
       @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : 'guest') + ": #{m.message}"
     end
