@@ -6,28 +6,6 @@ class MessagesController < ApplicationController
     flash[:alert] = "Please log in before starting a private chat"
     redirect_to seats_path
   end
- 
-  # POST /messages
-  # POST /messages.xml
-  def createglobalmessage
-    @seats = Seat.all
-    @message = Message.new
-    @message.message = params[:g_message]
-    @message.user_id_from = params[:from]
-    @message.user_id_to = nil
-    @message.save
-   
-    #@messages = Message.find_all_by_user_id_to(nil)
-    @messages = Message.where("user_id_to IS NULL AND created_at > ?", Time.now.strftime("%Y-%m-%d")) 
-
-    @messages.each do |m|
-      @gconversation = "#{@gconversation}\n#{User.find(m.user_id_from).username.upcase}:#{m.message}"
-    end
-
-    respond_to do |format|
-        format.html { render :action => "index.html.erb" }
-    end
-  end
 
   # POST /messages
   # POST /messages.xml

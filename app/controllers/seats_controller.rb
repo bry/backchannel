@@ -3,15 +3,20 @@ class SeatsController < ApplicationController
   def createglobalmessage
     @counter = 0
     @seats = Seat.all
-
     @message = Message.new
     @message.message = params[:g_message]
     @message.user_id_from = params[:from] 
     @message.user_id_to = nil
     @message.save
-     
+    
+    @messages = Message.where("user_id_to IS NULL AND created_at > ?", Time.now.strftime("%Y-%m-%d"))
+
+    @messages.each do |m|
+      @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : 'guest') + ": #{m.message}"
+    end
+
     respond_to do |format|
-        format.html {redirect_to(seats_url)} 
+        format.html { render :action => "index.html.erb" } 
     end
   end
 
