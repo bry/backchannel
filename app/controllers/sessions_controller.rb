@@ -1,11 +1,11 @@
 class SessionsController < ApplicationController
-  
+
   # Create
   #
   def create
     if user = User.authenticate(params[:username], params[:password])
       session[:user_id] = user.id
-      session[:start_time] = Time.now 
+      session[:start_time] = Time.now
       redirect_to '/enter', :notice => "Hi " + user.fname + " " + user.lname + "!"
     else
       flash.now[:alert] = "Invalid login/password combination"
@@ -19,12 +19,10 @@ class SessionsController < ApplicationController
     # Remove seated person
     @seat = Seat.where(:user_id=>session[:user_id])
     
-    if @seat != nil
-        @seat.each do |s|
-          s.user_id = nil
-          s.save
-        end
-    end
+    @seat.each do |s|
+      s.user_id = nil
+      s.save
+    end if @seat != nil
 
     reset_session
     redirect_to '/enter', :notice => "Good bye!"
