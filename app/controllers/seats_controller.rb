@@ -26,9 +26,7 @@ class SeatsController < ApplicationController
     @counter = 0
     @seats = Seat.all(:order =>'id')
 
-    #@messages = Message.find_all_by_user_id_to(nil)
     @messages = Message.where("user_id_to IS NULL AND created_at > ?", Time.now.strftime("%Y-%m-%d")) 
-
 
     @messages.each do |m|
       @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : 'guest') + ": #{m.message}"
@@ -133,12 +131,13 @@ class SeatsController < ApplicationController
             s.save
           end
       end 
+      
       # Occupy a seat and save
       @seat.user_id = session[:user_id] 
       @seat.save
     else
       # Can't sit, page will rerender with flash alert
-      flash[:alert] = "Seat ##{@seat.id} is curretnly occupied"
+      flash[:alert] = "Seat ##{@seat.id} is currently occupied"
     end
 
     respond_to do |format|
