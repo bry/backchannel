@@ -143,6 +143,7 @@ class SeatsController < ApplicationController
     respond_to do |format|
       format.html {redirect_to(seats_url)}
       format.xml  { render :xml => @seats }
+			format.js {render 'seats/sit.js.erb'};
     end
  end
 

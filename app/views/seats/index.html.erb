@@ -17,8 +17,9 @@
     <% @seats.each do |seat| %>
        <% if @counter > 7  %>
          <% @counter=0 %>
-	  </tr><tr>
-	<% end %>
+</tr>
+<tr>
+	  <% end %>
 	<td>
     <% if seat.user  %>
       <div class="SeatTaken">
@@ -32,7 +33,7 @@
            <% else %>
 		<div class="SeatOpen">
 		<p class="SeatOpenHeading"><%= seat.id%></p>
-		<p class="SeatDetail"><a title="Occupy Seat:<%= seat.id%>" href="#"><%= button_to "Sit", :action => "sit", :id => seat.id %> </p></a>
+		<p class="SeatDetail"><a title="Occupy Seat:<%= seat.id%>" href="#"><%= button_to "Sit", :action => "sit", :remote => true, :id => seat.id %> </p></a>
 		</div>
 	    <% end %> 
 	</td>
