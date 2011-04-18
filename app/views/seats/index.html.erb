@@ -33,7 +33,9 @@
            <% else %>
 		<div class="SeatOpen">
 		<p class="SeatOpenHeading"><%= seat.id%></p>
-		<p class="SeatDetail"><a title="Occupy Seat:<%= seat.id%>" href="#"><%= button_to "Sit", :action => "sit", :remote => true, :id => seat.id %> </p></a>
+		<p class="SeatDetail"><a title="Occupy Seat:<%= seat.id%>" href="#">
+			<%= button_to "Sit",die_path(seat.id, :format => :js), :remote => true, :id => seat.id %> 
+		</p></a>
 		</div>
 	    <% end %> 
 	</td>
@@ -48,18 +50,10 @@
 </div>
 
 <div class="chat"><h1>Classroom Chat Box</h1>
-
-<%= form_tag ("/messages/create/#{session[:user_id]}") do %>
-  <%= text_area_tag(:g_message_output, @gconversation, :size=>"75x10", :readonly=>"readonly") %>
+  <%= text_area_tag(:g_message_output, @gconversation, :size=>"30x10", :readonly=>"readonly") %>
   <br/>
-  <%= text_area_tag(:g_message, "", :size=>"75x10") %>
-  
-  <div class="actions">
-    <%= submit_tag(:Send) %>
-  </div>
-<% end %>
-
-
+  <%= text_area_tag(:g_message, "", :size=>"30*10" ) %>
+  <%= button_to "Send", session[:user_id]? createglobalmessage_path(session[:user_id], :format => :js):     poopoo_path( nil, :format => :js) , :remote => true %>    <!-- :Send was passed into different form helper( must te type -->
 </div>
 </div>
 <div style="clear:both"><br/></div>

@@ -2,7 +2,7 @@ Probset3::Application.routes.draw do
   match '/messages/create/:from/:to' => "messages#create" , :as=>"createmessage" 
   match '/messages/private/:from/:to' => "messages#showprivatechat" , :as=>"showprivatechat" 
   match '/messages/create/:from' => "seats#createglobalmessage", :as=>"createglobalmessage"
-  match '/messages/create' => "seats#createglobalmessage"
+  match '/messages/create' => "seats#createglobalmessage", :as=>"poopoo"
   match '/enter' => 'seats#index'  
   match '/messages/private//:to' => "messages#badprivatechat"  
 
@@ -12,8 +12,8 @@ Probset3::Application.routes.draw do
 	resource :session
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
-  match '/seats/sit/:id' => 'seats#sit'
-  match '/seats/sit' => 'seats#sit'
+  match '/seats/sit/:id' => 'seats#sit', :as => "die"
+  match '/seats/sit' => 'seats#sit', :as => "dying"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

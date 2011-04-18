@@ -16,7 +16,8 @@ class SeatsController < ApplicationController
     end
 
     respond_to do |format|
-        format.html { render :action => "index.html.erb" } 
+        format.html { render :action => "index.html.erb" }
+	format.js # 
     end
   end
 
@@ -143,7 +144,7 @@ class SeatsController < ApplicationController
     respond_to do |format|
       format.html {redirect_to(seats_url)}
       format.xml  { render :xml => @seats }
-			format.js {render 'seats/sit.js.erb'};
+      format.js  #{render 'sit.js.erb'}
     end
  end
 
