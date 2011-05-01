@@ -50,13 +50,12 @@
 </div>
 
 <div class="chat"><h1>Classroom Chat Box</h1>
-
-<%= form_tag( createglobalmessage_path( :from=>session[:user_id]) ,  :remote => true  ) do %>
+<form>
   <%= text_area_tag(:g_message_output, @gconversation, :size=>"30x10", :readonly=>"readonly") %>
   <br/>
   <%= text_area_tag(:g_message, "", :size=>"30*10" ) %>
-  <%= submit_tag(:Send) %>
-<% end %>
+  <%= button_to "Send", session[:user_id]? createglobalmessage_path( :from=>session[:user_id], :messageText=>"someText For you", :format => :js):  globalGuestMessage_path("you will get some text" , :format => :js) , :remote => true %>    <!-- :Send was passed into different form helper( must pass param directly -->
+</form>
 
 </div>
 </div>

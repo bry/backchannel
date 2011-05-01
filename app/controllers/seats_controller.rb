@@ -14,6 +14,7 @@ class SeatsController < ApplicationController
     @messages.each do |m|
       @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : 'guest') + ": #{m.message}"
     end
+	#@gconversation = @messsage.message
 
     respond_to do |format|
         format.html { render :action => "index.html.erb" }
