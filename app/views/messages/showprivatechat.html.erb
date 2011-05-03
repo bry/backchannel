@@ -1,8 +1,8 @@
 <div id="divMainContent">
 <br/><br/>
 <div class="privatechat"> <h1>Private Chat View</h1>
-
-      <%= form_tag ("/messages/create/#{params[:from]}/#{params[:to]}") do %>
+      <%= form_tag(createmessage_path( :from => params[:from], :to => params[:to]), :remote => true) do %>
+      <!-- form_tag ("/messages/create/#{params[:from]}/#{params[:to]}",  :remote => true) do -->
         <div class="chatto"> <strong>To: <%= User.find(params[:to]).fname %></strong>
         <%= text_area_tag(:message_output, @conversation, :size=>"75x10", :readonly=>"readonly") %> </div>
         <br/>
@@ -12,6 +12,7 @@
 	</div>
 	</div>
      <% end %>
+<%= link_to "Test Remote action", showprivatechat_path(:from => params[:from], :to=>params[:to]  , :format=>:js),  :remote => true, :id => 'testLink', :style=> 'display: none;'  %>
 
 </div>
 

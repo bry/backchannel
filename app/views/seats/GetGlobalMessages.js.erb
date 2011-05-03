@@ -1,0 +1,20 @@
+$('#g_message_output').val("<%= escape_javascript(@gconversation) %>"); 
+
+//  THIS WAS FOR BETTER PERFORMANCE BUT COULD NOT FULLY IMPLEMENT
+//$('#g_message_output').append("<%= escape_javascript(@gconversation) %>"); 
+
+
+
+
+//alert('<%= @lastMessageID %>');
+
+
+// FAILED ATTEMPTS AT SCROLLING
+//====================
+//$("g_message_output").scrollTop($("g_message_output").scrollTop()*12);
+
+//$('#g_message_output').scrollBottom = $('#g_message_output).scrollHeight;
+
+//var textArea = document.getElementById('#g_message_output');
+   // textArea.scrollTop = textArea.scrollHeight;
+// textArea.scrollTop =  =99999;

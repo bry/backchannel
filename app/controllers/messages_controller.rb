@@ -10,16 +10,21 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.xml
   def showprivatechat 
-    #@messages =  Message.find_all_by_user_id_to(params[:to])  
-    @messages = Message.where("user_id_to = ? AND created_at > ?", params[:to], session[:start_time]) 
+    #@messages =  Message.find_all_by_user_id_to(params[:to])       was  params[:to] before 
+    @messages = Message.where("user_id_to = ? AND created_at > ?", session[:user_id], session[:start_time]).order("id desc")
     @conversation = nil 
 
     @messages.each do |m|   
       @conversation = "#{@conversation}\n#{User.find(m.user_id_from).username.upcase}:#{m.message}"
     end
-    
+
+    if @conversation
+      @conversation = @conversation.first(4000)    
+    end
+
     respond_to do |format|
       format.html # showprivatechat.html.erb
+      format.js  #
       format.xml  { render :xml => @message }
     end
   end
@@ -75,6 +80,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       if @message.save
+#	format.js {render :action => "createMessage.js.erb"} 
         format.html { redirect_to(showprivatechat_path) }
         format.xml  { render :xml => @message, :status => :created, :location => @message }
       else
@@ -82,6 +88,7 @@ class MessagesController < ApplicationController
         format.xml  { render :xml => @message.errors, :status => :unprocessable_entity }
       end
     end
+    showprivatechat
   end
 
   # PUT /messages/1

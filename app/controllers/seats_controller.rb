@@ -1,5 +1,28 @@
 class SeatsController < ApplicationController
 
+  def GetGlobalMessages
+    # @lastMessageID = session["lastMessageID"]
+
+    @messages = Message.where("user_id_to IS NULL AND id > " + (session[:lmID] ? session[:lmID] : 1).to_s + " AND created_at > ?", Time.now.strftime("%Y-%m-%d")).order("id DESC")
+
+    
+    if (!Message.last == nil)
+	   session[:lmID] = Message.last.id
+    end
+    @messages.each do |m|
+        @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : 'guest') + ": #{m.message}"
+    end
+    if @gconversation
+       @gconversation = @gconversation.first(4000)
+    end 
+
+    respond_to do |format|
+        format.js { render :action => "GetGlobalMessages.js.erb" }
+       # format.js #
+    end
+  end
+
+
   def createglobalmessage
     @counter = 0
     @seats = Seat.all
@@ -9,12 +32,14 @@ class SeatsController < ApplicationController
     @message.user_id_to = nil
     @message.save
     
-    @messages = Message.where("user_id_to IS NULL AND created_at > ?", Time.now.strftime("%Y-%m-%d"))
+    @messages = Message.where("user_id_to IS NULL AND created_at > ?", Time.now.strftime("%Y-%m-%d")).order('id desc')
 
     @messages.each do |m|
       @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : 'guest') + ": #{m.message}"
     end
-	#@gconversation = @messsage.message
+    if @gconversation
+       @gconversation = @gconversation.first(4000)
+    end 
 
     respond_to do |format|
         format.html { render :action => "index.html.erb" }

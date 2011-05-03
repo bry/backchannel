@@ -1,7 +1,7 @@
 <br/>
 
-<div id="divMainContent">
 
+<div id="divMainContent">
 <div class="seating"><h1>Seating Chart</h1>
 
 <table>
@@ -51,12 +51,23 @@
 
 <div class="chat"><h1>Classroom Chat Box</h1>
 
-<%= form_tag( createglobalmessage_path( :from=>session[:user_id]) ,  :remote => true  ) do %>
+<% if @lastMessageID == nil %>
+<%   @lastMessageID = 1 %>
+<% end %>
+
+<%= link_to "Test Remote action", getglobalmessages_path(:lastMessage=>@lastMessageID, :format=>:js),  :remote => true, :id => 'testLink', :style=> 'display: none;'  %> 
+
+<%= showprivatechat_path(:from =>1, :to => 1) %>
+
+<%= form_tag( createglobalmessage_path( :from=>session[:user_id]) ,  :remote => true, :id => "submitForm"  ) do %>
   <%= text_area_tag(:g_message_output, @gconversation, :size=>"30x10", :readonly=>"readonly") %>
   <br/>
   <%= text_area_tag(:g_message, "", :size=>"30*10" ) %>
-  <%= submit_tag(:Send) %>
+  <%= submit_tag(:Send, :id => 'Submit') %>
 <% end %>
+
+
+
 
 </div>
 </div>

@@ -5,7 +5,55 @@
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag 'jquery-1.4.2.min', 'rails', 'application' %>
   <%= csrf_meta_tag %>
+
+
+<script type="text/javascript">
+// Script based on: http://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_stop
+  //  onclick="StartTimer()"  // start the event (only triggered from explicit call)
+  //  onclick="StopTimer()" // stop the timer
+
+var t;
+var timer_is_on=0;
+var c=0;
+
+//separate function for document.ready
+$(document).ready(function() {
+   StartTimer();
+});
+
+
+function timedCount()
+{
+ //  $('#g_message_output').val(c);
+ // c=c+1;
+ //causes postback but it works: document.forms["submitForm"].submit();
+ 
+ $('#testLink').click();
+  t=setTimeout("timedCount()",2000);  //wait to call again
+}
+
+
+
+function StartTimer()
+{
+//  alert("Timer is starting!");
+  if (!timer_is_on)
+  {
+    timer_is_on=1;
+    timedCount();
+  }
+}
+
+function sStopTimer()
+{
+  clearTimeout(t);
+  timer_is_on=0;
+}
+</script>
 </head>
+
+
+
 <body>
   <div id="header">
     <h1><%= link_to "Welcome to CS-408!", '/enter' %></h1>
