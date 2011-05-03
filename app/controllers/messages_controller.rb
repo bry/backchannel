@@ -77,18 +77,29 @@ class MessagesController < ApplicationController
     @message.message = params[:message]
     @message.user_id_from = params[:from]
     @message.user_id_to = params[:to]
+    @message.save
+
+    @messages = Message.where("user_id_to = ? AND created_at > ?", session[:user_id], session[:start_time]).order("id desc")
+    @conversation = nil
+
+    @messages.each do |m|
+      @conversation = "#{@conversation}\n#{User.find(m.user_id_from).username.upcase}:#{m.message}"
+    end
+
+    if @conversation
+      @conversation = @conversation.first(4000)
+    end
 
     respond_to do |format|
       if @message.save
-#	format.js {render :action => "createMessage.js.erb"} 
+	format.js {render :action => "createMessage.js.erb"} 
         format.html { redirect_to(showprivatechat_path) }
         format.xml  { render :xml => @message, :status => :created, :location => @message }
       else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @message.errors, :status => :unprocessable_entity }
+       format.html { render :action => "new" }
+       format.xml  { render :xml => @message.errors, :status => :unprocessable_entity }
       end
     end
-    showprivatechat
   end
 
   # PUT /messages/1
