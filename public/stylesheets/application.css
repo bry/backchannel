@@ -302,6 +302,15 @@ a:hover {
     text-align:center;
 }
 
+.SeatOpenHidden
+{
+   display: none; 
+   border:solid 1px #aaa;
+   height:65px;
+   width:65px;
+   -moz-border-radius: 10px;
+   -webkit-border-radius:10px;
+}
 
 .SeatOpen
 {
@@ -310,8 +319,8 @@ a:hover {
    width:65px;
    -moz-border-radius: 10px;
    -webkit-border-radius:10px;
-    
 }
+
 .SeatTaken
 {
     background-color:#aaa; 
