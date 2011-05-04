@@ -1,11 +1,8 @@
+var seatDivHTML = null; // String to build div
+var seatOpenDiv = null; // Refrence to open seat div tag
+var seatToRemove = null; // Reference to occupied seat div tag
 
-var divST = null;
-var divSOselector = null;
-var divSTselector = null;
-var previousSeatDiv = $("#divST<%= @prevSeat.id %>");
-var seatToRemove = null;
-
-// Remove all created seats
+// Remove all created seat divs
 <% @seats.each do |seat| %>
   seatToRemove = $("#divST<%= seat.id %>");
 
@@ -14,52 +11,35 @@ var seatToRemove = null;
   }
 <% end %>
 
-// Create all seats taken
+// Create all seats taken and hide corresponding open seat div
 <% @seats.each do |seat| %>
    
-  divSOselector = $("#divSO<%= seat.id %>");
-  divSTselector = $("#divST<%= seat.id %>");
+  seatOpenDiv = $("#divSO<%= seat.id %>");
 
-  <% if ( seat.user_id == @seat.id )  %>
+  // Seat is occupied
+  <% if seat.user_id %>
 
-  // Hide seat
-  $(divSOselector).hide();
+    // Hide open seat
+    $(seatOpenDiv).hide();
 
-  // Build seat
-  divST = null;
-  divST = '<div class="SeatTaken" id="' + "divST<%= seat.id%>" + '">';
-  divST += '<p class="SeatTakenHeading">' + "<%= seat.id%></p>";
-	divST += '<a title="Seat Taken By: ' + "<%= seat.user.fname %> <%= seat.user.lname %>" + '" href="#">';
-	divST += '<p class="SeatDetail"><strong>' + "<%= seat.user.fname %></strong> </p></a>";
-	divST += '<p class="SeatDetail">';
-	divST += '<a title="Chat with ' + "<%= seat.user.fname %>" + '" target="_blank" ';
-	divST += 'href="/messages/private/' + "<%=session[:user_id]%>/<%=seat.user.id%>" + '">Chat</a></p></div>';
+    // Build seat
+    seatDivHTML = null;
+    seatDivHTML = '<div class="SeatTaken" id="' + "divST<%= seat.id%>" + '">';
+    seatDivHTML += '<p class="SeatTakenHeading">' + "<%= seat.id%></p>";
+	  seatDivHTML += '<a title="Seat Taken By: ' + "<%= seat.user.fname %> <%= seat.user.lname %>" + '" href="#">';
+	  seatDivHTML += '<p class="SeatDetail"><strong>' + "<%= seat.user.fname %></strong> </p></a>";
+	  seatDivHTML += '<p class="SeatDetail">';
+	  seatDivHTML += '<a title="Chat with ' + "<%= seat.user.fname %>" + '" target="_blank" ';
+	  seatDivHTML += 'href="/messages/private/' + "<%=session[:user_id]%>/<%=seat.user.id%>" + '">Chat</a></p></div>';
 
-  // Occupy seat
-	$(divST).insertAfter(divSOselector);
+    // Show occupied seat built
+	  $(seatDivHTML).insertAfter(seatOpenDiv);
 
-  <% elsif seat.user_id %>
-
-  // Hide open seat
-  $(divSOselector).hide();
-
-  // Build seat
-  divST = null;
-  divST = '<div class="SeatTaken" id="' + "divST<%= seat.id%>" + '">';
-  divST += '<p class="SeatTakenHeading">' + "<%= seat.id%></p>";
-	divST += '<a title="Seat Taken By: ' + "<%= seat.user.fname %> <%= seat.user.lname %>" + '" href="#">';
-	divST += '<p class="SeatDetail"><strong>' + "<%= seat.user.fname %></strong> </p></a>";
-	divST += '<p class="SeatDetail">';
-	divST += '<a title="Chat with ' + "<%= seat.user.fname %>" + '" target="_blank" ';
-	divST += 'href="/messages/private/' + "<%=session[:user_id]%>/<%=seat.user.id%>" + '">Chat</a></p></div>';
-
-  // Occupy seat
-	$(divST).insertAfter(divSOselector);
-
+  // Seat is empty
   <% else %>
   
-    // Show empty seat for user to take
-    divSOselector.show();
+    // Show empty seat div for user to take
+    seatOpenDiv.show();
 
   <% end %>
 <% end %>

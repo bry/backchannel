@@ -140,7 +140,6 @@ class SeatsController < ApplicationController
   # PUT /seats/1.xml
   def sit
     @seat = Seat.find(params[:id])
-		@prevSeat = Seat.new # Pass in at least a new seat to format.js 
 		
     if session[:user_id] == nil
         flash[:alert] = "You must login to take a seat"
@@ -157,9 +156,6 @@ class SeatsController < ApplicationController
             # Unoccupy all seats currently occupied
             s.user_id = nil
             s.save
-						
-						# Record the previous taken seat id
-						@prevSeat = s
           end
       end 
       
@@ -169,6 +165,9 @@ class SeatsController < ApplicationController
 		
     else
       # Can't sit, page will rerender with flash alert
+      # TODO: after AJAX implementation, user is not 
+      #       flashed with this message when seat is
+      #       taken
       flash[:alert] = "Seat ##{@seat.id} is currently occupied"
     end
 
@@ -178,7 +177,7 @@ class SeatsController < ApplicationController
 		respond_to do |format|
 			format.html {redirect_to(seats_url)}
 			format.xml  {render :xml => @seats }
-			format.js 	{render 'sit.js.erb', :object => @seat, :object => @prevSeat, :object => @seats}
+			format.js 	{render 'sit.js.erb', :object => @seats} # Seats AJAXified
 		end
 			
  end
