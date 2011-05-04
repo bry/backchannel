@@ -1,50 +1,23 @@
 <br/>
 
-
 <div id="divMainContent">
+
 <div class="seating"><h1>Seating Chart</h1>
 
 <table>
 <tbody>
 <tr>
     <th colspan="8">
+    </th>
     <div class="ProfSeat">
     <p class="SeatTakenHeading">Professor </p>
-    <a title="Seat Reserved for Professor" href="#"><p class="SeatDetail"><strong>Prof. Avery</strong> </p></a> </div>
-    </th>
+    <a title="Seat Reserved for Professor" href="#"><p class="SeatDetail"><strong>Prof. Avery</strong> </p></a> 
+  </div>
 </tr>
-<tr>
-    <% @seats.each do |seat| %>
-       <% if @counter > 7  %>
-         <% @counter=0 %>
-</tr>
-<tr>
-	  <% end %>
-	<td>
-    <% if seat.user  %>
-      <div class="SeatTaken">
-	    	<p class="SeatTakenHeading">     
-    <% if (Message.where("created_at > ? AND (user_id_to = ? OR user_id_from = ?)", session[:start_time], seat.user.id, seat.user.id).count != 0) %>
-			<span style="float:left"><a title="Active on Chat Box" href=""> <img src="images/chat.png" alt="Active on Chat Box" width="16px" height="16px" /></a></span>
-    <% end %>
-    <%= seat.id%></p>
-	    	<a title="Seat Taken By: <%= seat.user.fname %> <%= seat.user.lname %>" href="#"><p class="SeatDetail"><strong><%= seat.user.fname %></strong> </p></a>
-	    	<a title="Chat with <%= seat.user.fname %>" target="_blank" href="/messages/private/<%=session[:user_id]%>/<%=seat.user.id%>"><p class="SeatDetail">Chat</p></a> </div>
-           <% else %>
-		<div class="SeatOpen">
-		<p class="SeatOpenHeading"><%= seat.id%></p>
-		<p class="SeatDetail"><a title="Occupy Seat:<%= seat.id%>" href="#">
-			<%= button_to "Sit",die_path(seat.id, :format => :js), :remote => true, :id => seat.id %> 
-		</p></a>
-		</div>
-	    <% end %> 
-	</td>
-	<% if @counter == 3  %>
-	  <td width="25px">  </td>
-	<% end %>
 
-    <% @counter+=1 %>
-    <% end %>
+<!-- Render all seats with seats partial -->
+<%= render(:partial => "seat", :locals => {:seats=> @seats, :counter => @counter } ) %>
+
 </tbody>
 </table> <br/><br/>
 </div>

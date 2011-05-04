@@ -12,7 +12,7 @@ Probset3::Application.routes.draw do
   resource :session
   match '/login' => "sessions#new", :as => "login"
   match '/logout' => "sessions#destroy", :as => "logout"
-  match '/seats/sit/:id' => 'seats#sit', :as => "die"
+  match '/seats/sit/:id' => 'seats#sit', :as => "sit"
   match '/seats/sit' => 'seats#sit', :as => "dying"
   match '/jsGetGlobalMessage/:lastMessage' => "seats#GetGlobalMessages", :as=> "getglobalmessages"
 

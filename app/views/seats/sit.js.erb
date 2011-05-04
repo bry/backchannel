@@ -1,2 +1,65 @@
-$('#Madyet').value = "MOOOOOOOOOO"; 
-alert("FU FU FU FU");
+
+var divST = null;
+var divSOselector = null;
+var divSTselector = null;
+var previousSeatDiv = $("#divST<%= @prevSeat.id %>");
+var seatToRemove = null;
+
+// Remove all created seats
+<% @seats.each do |seat| %>
+  seatToRemove = $("#divST<%= seat.id %>");
+
+  if (seatToRemove) {
+      seatToRemove.remove();
+  }
+<% end %>
+
+// Create all seats taken
+<% @seats.each do |seat| %>
+   
+  divSOselector = $("#divSO<%= seat.id %>");
+  divSTselector = $("#divST<%= seat.id %>");
+
+  <% if ( seat.user_id == @seat.id )  %>
+
+  // Hide seat
+  $(divSOselector).hide();
+
+  // Build seat
+  divST = null;
+  divST = '<div class="SeatTaken" id="' + "divST<%= seat.id%>" + '">';
+  divST += '<p class="SeatTakenHeading">' + "<%= seat.id%></p>";
+	divST += '<a title="Seat Taken By: ' + "<%= seat.user.fname %> <%= seat.user.lname %>" + '" href="#">';
+	divST += '<p class="SeatDetail"><strong>' + "<%= seat.user.fname %></strong> </p></a>";
+	divST += '<p class="SeatDetail">';
+	divST += '<a title="Chat with ' + "<%= seat.user.fname %>" + '" target="_blank" ';
+	divST += 'href="/messages/private/' + "<%=session[:user_id]%>/<%=seat.user.id%>" + '">Chat</a></p></div>';
+
+  // Occupy seat
+	$(divST).insertAfter(divSOselector);
+
+  <% elsif seat.user_id %>
+
+  // Hide open seat
+  $(divSOselector).hide();
+
+  // Build seat
+  divST = null;
+  divST = '<div class="SeatTaken" id="' + "divST<%= seat.id%>" + '">';
+  divST += '<p class="SeatTakenHeading">' + "<%= seat.id%></p>";
+	divST += '<a title="Seat Taken By: ' + "<%= seat.user.fname %> <%= seat.user.lname %>" + '" href="#">';
+	divST += '<p class="SeatDetail"><strong>' + "<%= seat.user.fname %></strong> </p></a>";
+	divST += '<p class="SeatDetail">';
+	divST += '<a title="Chat with ' + "<%= seat.user.fname %>" + '" target="_blank" ';
+	divST += 'href="/messages/private/' + "<%=session[:user_id]%>/<%=seat.user.id%>" + '">Chat</a></p></div>';
+
+  // Occupy seat
+	$(divST).insertAfter(divSOselector);
+
+  <% else %>
+  
+    // Show empty seat for user to take
+    divSOselector.show();
+
+  <% end %>
+<% end %>

@@ -140,7 +140,8 @@ class SeatsController < ApplicationController
   # PUT /seats/1.xml
   def sit
     @seat = Seat.find(params[:id])
-
+		@prevSeat = Seat.new # Pass in at least a new seat to format.js 
+		
     if session[:user_id] == nil
         flash[:alert] = "You must login to take a seat"
     end
@@ -156,22 +157,30 @@ class SeatsController < ApplicationController
             # Unoccupy all seats currently occupied
             s.user_id = nil
             s.save
+						
+						# Record the previous taken seat id
+						@prevSeat = s
           end
       end 
       
       # Occupy a seat and save
       @seat.user_id = session[:user_id] 
       @seat.save
+		
     else
       # Can't sit, page will rerender with flash alert
       flash[:alert] = "Seat ##{@seat.id} is currently occupied"
     end
 
-    respond_to do |format|
-      format.html {redirect_to(seats_url)}
-      format.xml  { render :xml => @seats }
-      format.js  #{render 'sit.js.erb'}
-    end
+    # After attempting to sit, get all seats to render
+    @seats = Seat.all 
+
+		respond_to do |format|
+			format.html {redirect_to(seats_url)}
+			format.xml  {render :xml => @seats }
+			format.js 	{render 'sit.js.erb', :object => @seat, :object => @prevSeat, :object => @seats}
+		end
+			
  end
 
 end

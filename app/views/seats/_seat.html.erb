@@ -1,0 +1,64 @@
+<tr>
+    <% @seats.each do |seat| %>
+      <% if @counter > 7 %>
+        <% @counter = 0 %>
+</tr>
+<tr>
+      <% end %> 
+
+  <td>
+<% if seat.user_id  %>
+
+  <div class="SeatTaken" id="divST<%= seat.id%>">
+	  <p class="SeatTakenHeading">     
+	    <%= seat.id%>
+	  </p>
+		
+		<a title="Seat Taken By: <%= seat.user.fname %> <%= seat.user.lname %>" href="#">
+		<p class="SeatDetail"><strong><%= seat.user.fname %></strong> </p></a>
+			
+		<p class="SeatDetail">
+			<a title="Chat with <%= seat.user.fname %>" target="_blank" href="/messages/private/<%=session[:user_id]%>/<%=seat.user.id%>">
+			  Chat
+			</a> 
+		</p>
+	</div>
+
+
+	<div class="SeatOpenHidden" id="divSO<%= seat.id%>">
+	  <p class="SeatOpenHeading">
+		  <%= seat.id%>
+		</p>
+		
+		<p />		
+	  <p class="SeatDetail" >
+		  <a title="Occupy Seat: <%= seat.id%>" href="#">
+		    <%= button_to "Sit", sit_path(seat.id, :format => :js), :remote => true %>
+		  </a>
+	  </p>
+	</div>
+
+<% else %>
+	<div class="SeatOpen" id="divSO<%= seat.id%>">
+	  <p class="SeatOpenHeading">
+		  <%= seat.id%>
+		</p>
+		
+		<p />		
+	  <p class="SeatDetail" >
+		  <a title="Occupy Seat: <%= seat.id%>" href="#">
+		    <%= button_to "Sit", sit_path(seat.id, :format => :js), :remote => true %>
+		  </a>
+	  </p>
+	</div>
+<% end %> 
+
+</td>
+<% if @counter == 3 %>
+  <td width="25px"> </td>
+<% end %>
+
+<% @counter+=1 %>
+<% end %>
+
+
