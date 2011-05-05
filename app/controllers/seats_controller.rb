@@ -4,14 +4,14 @@ class SeatsController < ApplicationController
     # @lastMessageID = session["lastMessageID"]
 
     @messages = Message.where("user_id_to IS NULL AND id > " + (session[:lmID] ? session[:lmID] : 1).to_s + " AND created_at > ?", Time.now.strftime("%Y-%m-%d")).order("id DESC")
-
     
     if (!Message.last == nil)
-	   session[:lmID] = Message.last.id
+        session[:lmID] = Message.last.id
     end
     @messages.each do |m|
         @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : 'guest') + ": #{m.message}"
     end
+   
     if @gconversation
        @gconversation = @gconversation.first(4000)
     end 
@@ -43,7 +43,7 @@ class SeatsController < ApplicationController
 
     respond_to do |format|
         format.html { render :action => "index.html.erb" }
-	format.js # 
+        format.js # 
     end
   end
 
@@ -140,7 +140,7 @@ class SeatsController < ApplicationController
   # PUT /seats/1.xml
   def sit
     @seat = Seat.find(params[:id])
-		
+
     if session[:user_id] == nil
         flash[:alert] = "You must login to take a seat"
     end
@@ -162,7 +162,7 @@ class SeatsController < ApplicationController
       # Occupy a seat and save
       @seat.user_id = session[:user_id] 
       @seat.save
-		
+
     else
       # Can't sit, page will rerender with flash alert
       # TODO: after AJAX implementation, user is not 
@@ -174,12 +174,12 @@ class SeatsController < ApplicationController
     # After attempting to sit, get all seats to render
     @seats = Seat.all 
 
-		respond_to do |format|
-			format.html {redirect_to(seats_url)}
-			format.xml  {render :xml => @seats }
-			format.js 	{render 'sit.js.erb', :object => @seats} # Seats AJAXified
-		end
-			
+    respond_to do |format|
+      format.html {redirect_to(seats_url)}
+      format.xml  {render :xml => @seats }
+      format.js   {render 'sit.js.erb', :object => @seats} # Seats AJAXified
+    end
+
  end
 
 end
