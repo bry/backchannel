@@ -23,7 +23,7 @@ class SeatsController < ApplicationController
   end
 
   # POST /messages/create
-  def createglobalmessage
+  def create_global_message
     @counter = 0
     @seats = Seat.all
     @message = Message.new

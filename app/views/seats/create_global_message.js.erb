@@ -1,5 +1,5 @@
 $('#g_message').val(""); 
 $('#g_message_output').val("<%= escape_javascript(@gconversation) %>"); 
-//$('#g_message_output').scrollTop = ('#g_message_output).scrollHeight;
+$('#g_message_output').attr("scrollTop",9999);
 
 //alert("<%= escape_javascript(@gconversation) %>"); 
