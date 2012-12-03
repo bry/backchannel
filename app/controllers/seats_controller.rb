@@ -18,7 +18,7 @@ class SeatsController < ApplicationController
     end 
 
     respond_to do |format|
-        format.js { render :action => "get_global_messages.js.erb" }
+        format.js 
     end
   end
 
