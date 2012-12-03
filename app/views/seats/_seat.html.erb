@@ -1,8 +1,8 @@
 <!-- On browser refresh, render all taken seats and open seats -->
 <tr>
-    <% @seats.each do |seat| %>
-      <% if @counter > 7 %>
-        <% @counter = 0 %>
+    <% seats.each do |seat| %>
+      <% if counter > 7 %>
+        <% counter = 0 %>
 </tr>
 <tr>
       <% end %> 
@@ -59,10 +59,10 @@
   </td>
 
 <!-- Classroom seat view formatting -->
-<% if @counter == 3 %>
+<% if counter == 3 %>
     <td width="25px"> </td>
 <% end %>
 
-<% @counter+=1 %>
+<% counter+=1 %>
 <% end %>
 
