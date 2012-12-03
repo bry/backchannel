@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.xml
   def showprivatechat 
-    @messages = Message.where("user_id_to = ? AND created_at > ?", session[:user_id], session[:start_time]).order("id desc")
+    @messages = Message.where("user_id_to = ? AND created_at > ?", session[:user_id], session[:start_time]).order("id asc")
     @conversation = nil 
 
     @messages.each do |m|   

@@ -1,5 +1,3 @@
+// Append private messages, auto scroll to text area bottom
 $('#message_output').val("<%= escape_javascript(@conversation) %>"); 
-
-
-
-
+$('#message_output').attr("scrollTop",9999);
