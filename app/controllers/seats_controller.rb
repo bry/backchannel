@@ -1,5 +1,6 @@
 class SeatsController < ApplicationController
 
+  # GET /jsGetGlobalMessage/:lastMessage
   def get_global_messages
 
     @messages = Message.where("user_id_to IS NULL AND id >= " + (session[:lmID] ? session[:lmID] : 1).to_s + " AND created_at > ?", Time.now.strftime("%Y-%m-%d")).order("id ASC")
@@ -21,7 +22,7 @@ class SeatsController < ApplicationController
     end
   end
 
-
+  # POST /messages/create
   def createglobalmessage
     @counter = 0
     @seats = Seat.all
@@ -36,13 +37,14 @@ class SeatsController < ApplicationController
     @messages.each do |m|
       @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : 'guest') + ": #{m.message}"
     end
+
     if @gconversation
        @gconversation = @gconversation.first(4000)
     end 
 
     respond_to do |format|
         format.html { render :action => "index.html.erb" }
-        format.js # 
+        format.js 
     end
   end
 
