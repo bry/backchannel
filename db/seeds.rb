@@ -5,10 +5,8 @@
 #
 #   cities = City.create([{ :name => 'Chicago' }, { :name => 'Copenhagen' }])
 #   Mayor.create(:name => 'Daley', :city => cities.first)
-@i = 1
+Seat.delete_all
 
-while @i<=32
+32.times do 
    Seat.create()
-   @i=@i+1
-
 end
