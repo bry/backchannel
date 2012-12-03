@@ -1,10 +1,10 @@
 Probset3::Application.routes.draw do
-  match '/messages/create' => "seats#createglobalmessage", :as=>"createglobalmessage"
-  match '/messages/create/:from/:to' => "messages#create" , :as=>"createmessage" 
-  match '/messages/private/:from/:to' => "messages#showprivatechat" , :as=>"showprivatechat" 
-  match '/messages/create/:messageText' => "seats#createglobalmessage" 
+  match '/messages/create' => "seats#create_global_message", :as=>"create_global_message"
+  match '/messages/create/:from/:to' => "messages#create" , :as=>"create_message" 
+  match '/messages/private/:from/:to' => "messages#show_private_chat" , :as=>"show_private_chat" 
+  match '/messages/create/:messageText' => "seats#create_global_message" 
   match '/enter' => 'seats#index'  
-  match '/messages/private//:to' => "messages#badprivatechat"  
+  match '/messages/private//:to' => "messages#bad_private_chat"  
 
   resources :seats
   resources :messages
