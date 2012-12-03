@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CS-408 Class Seating Chart</title>
+  <title>Generic Class Seating Chart</title>
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag 'jquery-1.4.2.min', 'rails', 'application' %>
   <%= csrf_meta_tag %>
@@ -9,8 +9,8 @@
 
 <script type="text/javascript">
 // Script based on: http://www.w3schools.com/js/tryit.asp?filename=tryjs_timing_stop
-  //  onclick="StartTimer()"  // start the event (only triggered from explicit call)
-  //  onclick="StopTimer()" // stop the timer
+//   onclick="StartTimer()"  // start the event (only triggered from explicit call)
+//   onclick="StopTimer()" // stop the timer
 
 var t;
 var timer_is_on=0;
@@ -60,7 +60,7 @@ function sStopTimer()
         src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
         alt="Fork me on GitHub"> </a>
   <div id="header">
-    <h1><%= link_to "Welcome to CS-408!", '/enter' %></h1>
+    <h1><%= link_to "Welcome to Class!", '/enter' %></h1>
     <div id="user_bar">
       <% if logged_in? %>
         <%= link_to "Edit User", edit_user_path(current_user) %> |

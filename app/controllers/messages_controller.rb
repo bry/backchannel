@@ -1,7 +1,8 @@
 class MessagesController < ApplicationController
 
   before_filter :checksession, :only=> :showprivatechat 
-  
+ 
+  # GET /messages/private/{user_not_logged_in}/:to
   def badprivatechat
     flash[:alert] = "Please log in before starting a private chat"
     redirect_to seats_path
@@ -10,7 +11,6 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.xml
   def showprivatechat 
-    #@messages =  Message.find_all_by_user_id_to(params[:to])       was  params[:to] before 
     @messages = Message.where("user_id_to = ? AND created_at > ?", session[:user_id], session[:start_time]).order("id desc")
     @conversation = nil 
 
@@ -24,7 +24,7 @@ class MessagesController < ApplicationController
 
     respond_to do |format|
       format.html # showprivatechat.html.erb
-      format.js  #
+      format.js 
       format.xml  { render :xml => @message }
     end
   end
@@ -134,11 +134,10 @@ class MessagesController < ApplicationController
   private
 
   # checksession 
-  # checksession
   def checksession
-     if session[:user_id] == nil 
-         redirect_to seats_path, :notice=>"Please log in"
-     end
+    if session[:user_id] == nil 
+      redirect_to seats_path, :notice=>"Please log in"
+    end
   end
 
 end

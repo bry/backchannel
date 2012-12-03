@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
   end
+
   def create
     @user = User.new(params[:user])
     if @user.save
@@ -15,7 +16,7 @@ class UsersController < ApplicationController
 
   def edit
     @user = current_user
-	end
+  end
 
   def update
     @user = current_user

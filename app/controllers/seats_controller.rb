@@ -1,15 +1,15 @@
 class SeatsController < ApplicationController
 
-  def GetGlobalMessages
-    # @lastMessageID = session["lastMessageID"]
+  def get_global_messages
 
-    @messages = Message.where("user_id_to IS NULL AND id > " + (session[:lmID] ? session[:lmID] : 1).to_s + " AND created_at > ?", Time.now.strftime("%Y-%m-%d")).order("id DESC")
+    @messages = Message.where("user_id_to IS NULL AND id >= " + (session[:lmID] ? session[:lmID] : 1).to_s + " AND created_at > ?", Time.now.strftime("%Y-%m-%d")).order("id ASC")
     
     if (!Message.last == nil)
         session[:lmID] = Message.last.id
     end
+
     @messages.each do |m|
-        @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : 'guest') + ": #{m.message}"
+        @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : "guest") + ": #{m.message}"
     end
    
     if @gconversation
@@ -17,8 +17,7 @@ class SeatsController < ApplicationController
     end 
 
     respond_to do |format|
-        format.js { render :action => "GetGlobalMessages.js.erb" }
-       # format.js #
+        format.js { render :action => "get_global_messages.js.erb" }
     end
   end
 
