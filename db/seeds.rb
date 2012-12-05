@@ -7,6 +7,8 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 Seat.delete_all
 
-32.times do 
-   Seat.create()
+(1..32).each do |given_id| 
+   seat = Seat.new
+   seat.id = given_id
+   seat.save
 end
