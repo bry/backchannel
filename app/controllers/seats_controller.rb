@@ -3,7 +3,8 @@ class SeatsController < ApplicationController
   # GET /jsGetGlobalMessage/:lastMessage
   def get_global_messages
 
-    @messages = Message.where("user_id_to IS NULL AND id >= " + (session[:lmID] ? session[:lmID] : 1).to_s + " AND created_at > ?", Time.now.strftime("%Y-%m-%d")).order("id ASC")
+    @messages = Message.where("user_id_to IS NULL AND id >= " + 
+      (session[:lmID] ? session[:lmID] : 1).to_s + " AND created_at > ?", Time.now.strftime("%Y-%m-%d")).order("id ASC")
     
     if (!Message.last == nil)
         session[:lmID] = Message.last.id
@@ -32,7 +33,7 @@ class SeatsController < ApplicationController
     @message.user_id_to = nil
     @message.save
     
-    @messages = Message.where("user_id_to IS NULL AND created_at > ?", Time.now.strftime("%Y-%m-%d")).order('id desc')
+    @messages = Message.where("user_id_to IS NULL AND created_at > ?", Time.now.strftime("%Y-%m-%d")).order('id ASC')
 
     @messages.each do |m|
       @gconversation = "#{@gconversation}\n"+ (m.user_id_from ? User.find(m.user_id_from).username : 'guest') + ": #{m.message}"

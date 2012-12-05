@@ -14,7 +14,7 @@ Probset3::Application.routes.draw do
   match '/logout' => "sessions#destroy", :as => "logout"
   match '/seats/sit/:id' => 'seats#sit', :as => "sit"
   match '/seats/sit' => 'seats#sit', :as => "dying"
-  match '/jsGetGlobalMessage/:lastMessage' => "seats#get_global_messages", :as=> "getglobalmessages"
+  match '/jsGetGlobalMessage/:lastMessage' => "seats#get_global_messages", :as=> "get_global_messages"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
