@@ -1,7 +1,6 @@
 // Append global messages, auto scroll to text area bottom
 $('#g_message_output').val("<%= escape_javascript(@gconversation) %>"); 
 
-// TODO: Fix text area onfocus autoscroll
 $("#g_message_output").focus(function() {
     // No scroll on text area focus
 })
@@ -11,7 +10,6 @@ $("#g_message_output").focus(function() {
 .load(function() {
     $(this).attr("scrollTop", 99999999);
 });
-
 
 // TODO: Append new messages to text area instead of loading all
 //$('#g_message_output').append("<%= escape_javascript(@gconversation) %>"); 
