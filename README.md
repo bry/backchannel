@@ -1,9 +1,9 @@
-[Classroom Seating Chart and Backchannel Project](http://sharp-spring-494.heroku.com/enter)
+[Backchannel](https://backchannel-app.herokuapp.com/)
 ==============
 
 A simple classroom seating chart and [backchannel](http://en.wikipedia.org/wiki/Backchannel) project.
 
-## Requirements 
+## Requirements
 - Registration
 - Login
 - Select seat
@@ -11,4 +11,3 @@ A simple classroom seating chart and [backchannel](http://en.wikipedia.org/wiki/
 - Global chat
 - Private chat
 - Logout
-
